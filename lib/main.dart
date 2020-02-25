@@ -20,28 +20,51 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Theme.of(context).canvasColor,
-        actions: <Widget>[
-          BadgeIcon(
-            iconButton: IconButton(icon: Icon(Icons.notifications), onPressed: null),
-            number: '16'
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Theme.of(context).canvasColor,
+          actions: <Widget>[
+            Row(children: <Widget>[
+              BadgeIcon(
+                  iconButton: IconButton(
+                      icon: Icon(Icons.notifications), onPressed: null),
+                  number: '16'),
+              IconButton(
+                icon: Icon(Icons.account_circle),
+                onPressed: null,
+              )
+            ], mainAxisAlignment: MainAxisAlignment.center)
+          ],
+        ),
+        body: CustomScrollView(slivers: <Widget>[
+          SliverAppBar(
+            pinned: true,
+            backgroundColor: Theme.of(context).canvasColor,
+            expandedHeight: 75.0,
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
+              title: Text('Demo'),
+            ),
           ),
-          IconButton(
-            icon: Icon(Icons.account_circle),
-            onPressed: null,
-          )
-        ],
-      ),
-      body: TodoCard(),
-      floatingActionButton: MyFloatingActionButton());
+          SliverGrid(
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200.0,
+              mainAxisSpacing: 10.0,
+              crossAxisSpacing: 10.0,
+            ),
+            delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+              return TodoCard();
+            },
+            childCount: 10),
+            
+          ),
+        ]),
+        floatingActionButton: MyFloatingActionButton());
   }
 }
 
 class MyFloatingActionButton extends StatelessWidget {
-  const MyFloatingActionButton
-({Key key}) : super(key: key);
+  const MyFloatingActionButton({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +72,7 @@ class MyFloatingActionButton extends StatelessWidget {
       onPressed: () {
         // Add your onPressed code here!
       },
-      child: Icon(Icons.add
-      ),
+      child: Icon(Icons.add),
       backgroundColor: Theme.of(context).accentColor,
     );
   }
@@ -61,57 +83,62 @@ class TodoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  return Card(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Text('Some Title'),
-          Text('Some subtitle'),
-          Text('how many points'),
-          Icon(Icons.account_circle)
-        ],
-      ),
-    );
-}
+    return Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: Container(
+          padding: EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Text('Some Title',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              Text('Some subtitle'),
+              Text('how many points'),
+              Icon(Icons.account_circle)
+            ],
+          ),
+        ));
+  }
 }
 
 class BadgeIcon extends StatelessWidget {
   final String number;
   final IconButton iconButton;
 
-  const BadgeIcon({
-    Key key,
-    @required this.number,
-    @required this.iconButton
-  }) : super(key: key);
+  const BadgeIcon({Key key, @required this.number, @required this.iconButton})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(children: <Widget>[
-            this.iconButton,
-            Positioned(
-              right: 11,
-              top: 11,
-              child: Container(
-                padding: EdgeInsets.all(2),
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                constraints: BoxConstraints(
-                  minWidth: 14,
-                  minHeight: 14,
-                ),
-                child: Text(
-                  this.number,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 8,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            )
-          ]);
+      this.iconButton,
+      Positioned(
+        right: 11,
+        top: 11,
+        child: Container(
+          padding: EdgeInsets.all(2),
+          decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(6),
+          ),
+          constraints: BoxConstraints(
+            minWidth: 14,
+            minHeight: 14,
+          ),
+          child: Text(
+            this.number,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 8,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      )
+    ]);
   }
 }
