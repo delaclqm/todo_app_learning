@@ -10,7 +10,7 @@ class TodoHome extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Theme.of(context).canvasColor,
+          backgroundColor: Colors.transparent,
           actions: <Widget>[
             Row(children: <Widget>[
               BadgeIcon(
@@ -43,10 +43,54 @@ class MyFloatingActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        // Add your onPressed code here!
+        showModalBottomSheet(
+            context: context,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25.0),
+                  topRight: Radius.circular(25.0)),
+            ),
+            backgroundColor: Theme.of(context).canvasColor,
+            builder: (context) {
+              return _buildCreateCategoryModal(context);
+            });
       },
       child: Icon(Icons.add),
       backgroundColor: Theme.of(context).accentColor,
+    );
+  }
+
+  Widget _buildCreateCategoryModal(BuildContext context) {
+    // return  Padding(
+    //   padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      return  Container(
+        padding: EdgeInsets.all(14.0),
+      height: MediaQuery.of(context).size.height * 0.95,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text("Create New Board", style: TextStyle(fontSize: 35),),
+          Form(
+            child: ListTile(
+              title: TextField(
+              decoration: InputDecoration(
+                  fillColor: Theme.of(context).cardColor,
+                  hintText: 'Name of Board'
+                ),
+            )),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              RaisedButton(
+                child: Text('Create'),
+                onPressed: () => {},
+              )
+            ]
+          )
+        ],
+      ),
     );
   }
 }

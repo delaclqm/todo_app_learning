@@ -37,8 +37,8 @@ class TodoList extends StatelessWidget {
               ),
               ClipRRect(
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(36.0),
-                      topRight: Radius.circular(36.0)),
+                      topLeft: Radius.circular(25.0),
+                      topRight: Radius.circular(25.0)),
                   child: Container(
                     padding: EdgeInsets.all(4.0),
                     color: Theme.of(context).cardColor,
@@ -53,9 +53,5 @@ class TodoList extends StatelessWidget {
     return List<TodoTile>.generate(20, (index) {
       return TodoTile();
     });
-  }
-
-  Widget _buildBottomSheet() {
-    return BottomSheet(onClosing: null, builder: null);
   }
 }
