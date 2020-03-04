@@ -32,7 +32,7 @@ class TodoCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        Icon(Icons.school, size: 48, color: Colors.deepPurple,)
+                        Icon(Icons.school, size: 48, color: Colors.green,)
                       ],
                     )
                   ],

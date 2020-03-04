@@ -3,14 +3,29 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:todo_app_learning/features/todo/presentation/pages/todo_detail.dart';
 
-class TodoTile extends StatelessWidget {
-  const TodoTile({Key key}) : super(key: key);
+class TodoTile extends StatefulWidget {
+  
+  @override
+  _TodoTileState createState() => _TodoTileState();
+}
+
+class _TodoTileState extends State<TodoTile> {
+  bool _completed = Random().nextBool();
+  static double _difficulty = Random().nextDouble();
+  String _difficultyInWords = _determineDifficulty(_difficulty);
+
+  static String _determineDifficulty(double value) {
+    if(value <= 0.33) {
+      return "Easy";
+    } else if (value <= 0.66) {
+      return "Medium";
+    } else {
+      return "Hard";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    bool completed = Random().nextBool();
-    final String difficulty = Random().nextDouble().toString();
-
     return ListTile(
         contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         leading: Container(
@@ -18,14 +33,15 @@ class TodoTile extends StatelessWidget {
           decoration: new BoxDecoration(
               border: new Border(
                   right: new BorderSide(width: 1.0, color: Colors.white24))),
-          child: IconButton(
-            icon: completed
-                ? Icon(Icons.check_box)
-                : Icon(Icons.check_box_outline_blank),
-            onPressed: () {
-              completed = !completed;
+          child: Checkbox(
+            value: _completed,
+            checkColor: Colors.black,
+            onChanged: (bool newValue) {
+              setState(() {
+                _completed = newValue;
+              });
             },
-          ),
+          )
         ),
         title: Text(
           'Title',
@@ -38,7 +54,7 @@ class TodoTile extends StatelessWidget {
                 child: Container(
                   child: LinearProgressIndicator(
                       backgroundColor: Color.fromRGBO(209, 224, 224, 0.2),
-                      value: double.parse(difficulty),
+                      value: _difficulty,
                       valueColor: AlwaysStoppedAnimation(Colors.green)),
                 )),
             Expanded(
@@ -46,24 +62,35 @@ class TodoTile extends StatelessWidget {
               child: Padding(
                   padding: EdgeInsets.only(left: 10.0),
                   child:
-                      Text(difficulty, style: TextStyle(color: Colors.white))),
+                      Text(_difficultyInWords, style: TextStyle(color: Colors.white))),
             )
           ],
         ),
-        trailing: IconButton(
-            icon: Icon(Icons.keyboard_arrow_right,
-                color: Colors.white, size: 30.0),
-            onPressed: () {
-              showModalBottomSheet(
-                  context: context,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(50.0),
-                      topRight: Radius.circular(50.0)
-                    ),
-                  ),
-                  backgroundColor: Theme.of(context).canvasColor,
-                  builder: (context) => TodoDetail());
-            }));
+        trailing: _buildTrailingActionIcon());
+  }
+}
+
+class _buildTrailingActionIcon extends StatelessWidget {
+  const _buildTrailingActionIcon({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        icon: Icon(Icons.keyboard_arrow_right,
+            color: Colors.white, size: 30.0),
+        onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50.0),
+                  topRight: Radius.circular(50.0)
+                ),
+              ),
+              backgroundColor: Theme.of(context).canvasColor,
+              builder: (context) => TodoDetail());
+        });
   }
 }
