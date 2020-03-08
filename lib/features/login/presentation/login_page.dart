@@ -21,7 +21,8 @@ class LoginPage extends StatelessWidget {
             children: <Widget>[
               Image.network(
                   "https://raw.githubusercontent.com/flutter/website/master/src/_assets/image/flutter-lockup.png"),
-              _signInButton()
+              _signInButton(),
+              RaisedButton(child: Text("Sign Out!"),onPressed: () {signOutGoogle();})
             ],
           ),
         )));
@@ -81,7 +82,6 @@ class LoginPage extends StatelessWidget {
     final FirebaseUser currentUser = await _auth.currentUser();
     assert(user.uid == currentUser.uid);
 
-    print(user);
     return 'signInWithGoogle succeeded: $user';
   }
 
