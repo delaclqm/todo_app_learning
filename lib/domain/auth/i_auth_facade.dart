@@ -2,11 +2,13 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 
 import 'auth_failure.dart';
+import 'user.dart';
 import 'value_objects.dart';
 
 /// Facade is a design pattern
 abstract class IAuthFacade {
 
+  Future<Option<User>> getSignedInUser();
   /// Must return a Unit on the right because void is not a type and Either 
   /// requires a type to be returned but it is essentially void
   Future<Either<AuthFailure, Unit>> registerWithEmailAndPassword({
@@ -21,4 +23,6 @@ abstract class IAuthFacade {
 
   // Sign in with Google
   Future<Either<AuthFailure, Unit>> signInWithGoogle();
+
+  Future<void> signOut();
 }

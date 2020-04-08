@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app_learning/features/todo/presentation/pages/todo_home.dart';
-import 'package:todo_app_learning/features/todo/presentation/widgets/todo_tile.dart';
+
 
 class TodoList extends StatelessWidget {
   const TodoList({Key key}) : super(key: key);
