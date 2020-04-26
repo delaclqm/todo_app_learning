@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app_learning/core/widgets/badge_icon.dart';
-import 'package:todo_app_learning/features/todo/presentation/widgets/todo_card.dart';
 
-class TodoHome extends StatelessWidget {
-  const TodoHome({Key key}) : super(key: key);
+import '../todo_card.dart';
+
+class TodoHomePage extends StatelessWidget {
+  const TodoHomePage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +13,6 @@ class TodoHome extends StatelessWidget {
           backgroundColor: Colors.transparent,
           actions: <Widget>[
             Row(children: <Widget>[
-              BadgeIcon(
-                  iconButton: IconButton(
-                      icon: Icon(Icons.notifications), onPressed: null),
-                  number: '16'),
               IconButton(
                 icon: Icon(Icons.account_circle),
                 onPressed: null,
@@ -64,7 +60,7 @@ class MyFloatingActionButton extends StatelessWidget {
     // return  Padding(
     //   padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       return  Container(
-        padding: EdgeInsets.all(14.0),
+        padding: const EdgeInsets.all(14.0),
       height: MediaQuery.of(context).size.height * 0.95,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

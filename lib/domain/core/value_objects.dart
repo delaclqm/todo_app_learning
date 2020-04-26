@@ -65,6 +65,13 @@ class UniqueId extends ValueObject<String> {
     );
   }
 
+  factory UniqueId.fromUniqueString(String uniqueIdStr) {
+    assert(uniqueIdStr != null);
+    return UniqueId._(
+      right(uniqueIdStr),
+    );
+  }
+
   const UniqueId._(this.value);
 }
 

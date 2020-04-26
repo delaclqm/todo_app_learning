@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../todo_tile.dart';
+
 
 class TodoList extends StatelessWidget {
   const TodoList({Key key}) : super(key: key);
@@ -45,7 +47,7 @@ class TodoList extends StatelessWidget {
                     child: ListView(children: _buildTiles(context)),
                   ))
             ])),
-        floatingActionButton: MyFloatingActionButton());
+        );
   }
 
   List<TodoTile> _buildTiles(BuildContext context) {

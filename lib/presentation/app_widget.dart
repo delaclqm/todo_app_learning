@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../application/auth/auth_bloc.dart';
 import '../injection.dart';
+import 'routes/router.gr.dart';
 
 class AppWidget extends StatelessWidget {
   @override

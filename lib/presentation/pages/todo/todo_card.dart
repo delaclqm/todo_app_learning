@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app_learning/features/todo/presentation/pages/todo_list.dart';
 
 class TodoCard extends StatelessWidget {
   const TodoCard({Key key}) : super(key: key);
@@ -9,9 +8,7 @@ class TodoCard extends StatelessWidget {
     final double cardBorderRadius = 25.0;
 
     return GestureDetector(
-        onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => TodoList()),
-            ),
+        onTap: () => {},
         child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(cardBorderRadius),
