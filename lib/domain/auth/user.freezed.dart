@@ -7,7 +7,14 @@ part of 'user.dart';
 // FreezedGenerator
 // **************************************************************************
 
-T _$identity<T>(T value) => value;
+mixin _$User {
+  UniqueId get id;
+  StringSingleLine get name;
+  EmailAddress get emailAddress;
+
+  User copyWith(
+      {UniqueId id, StringSingleLine name, EmailAddress emailAddress});
+}
 
 class _$UserTearOff {
   const _$UserTearOff();
@@ -24,76 +31,7 @@ class _$UserTearOff {
   }
 }
 
-// ignore: unused_element
 const $User = _$UserTearOff();
-
-mixin _$User {
-  UniqueId get id;
-  StringSingleLine get name;
-  EmailAddress get emailAddress;
-
-  $UserCopyWith<User> get copyWith;
-}
-
-abstract class $UserCopyWith<$Res> {
-  factory $UserCopyWith(User value, $Res Function(User) then) =
-      _$UserCopyWithImpl<$Res>;
-  $Res call({UniqueId id, StringSingleLine name, EmailAddress emailAddress});
-}
-
-class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
-  _$UserCopyWithImpl(this._value, this._then);
-
-  final User _value;
-  // ignore: unused_field
-  final $Res Function(User) _then;
-
-  @override
-  $Res call({
-    Object id = freezed,
-    Object name = freezed,
-    Object emailAddress = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as UniqueId,
-      name: name == freezed ? _value.name : name as StringSingleLine,
-      emailAddress: emailAddress == freezed
-          ? _value.emailAddress
-          : emailAddress as EmailAddress,
-    ));
-  }
-}
-
-abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory _$UserCopyWith(_User value, $Res Function(_User) then) =
-      __$UserCopyWithImpl<$Res>;
-  @override
-  $Res call({UniqueId id, StringSingleLine name, EmailAddress emailAddress});
-}
-
-class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
-    implements _$UserCopyWith<$Res> {
-  __$UserCopyWithImpl(_User _value, $Res Function(_User) _then)
-      : super(_value, (v) => _then(v as _User));
-
-  @override
-  _User get _value => super._value as _User;
-
-  @override
-  $Res call({
-    Object id = freezed,
-    Object name = freezed,
-    Object emailAddress = freezed,
-  }) {
-    return _then(_User(
-      id: id == freezed ? _value.id : id as UniqueId,
-      name: name == freezed ? _value.name : name as StringSingleLine,
-      emailAddress: emailAddress == freezed
-          ? _value.emailAddress
-          : emailAddress as EmailAddress,
-    ));
-  }
-}
 
 class _$_User with DiagnosticableTreeMixin implements _User {
   const _$_User(
@@ -145,8 +83,19 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       const DeepCollectionEquality().hash(emailAddress);
 
   @override
-  _$UserCopyWith<_User> get copyWith =>
-      __$UserCopyWithImpl<_User>(this, _$identity);
+  _$_User copyWith({
+    Object id = freezed,
+    Object name = freezed,
+    Object emailAddress = freezed,
+  }) {
+    return _$_User(
+      id: id == freezed ? this.id : id as UniqueId,
+      name: name == freezed ? this.name : name as StringSingleLine,
+      emailAddress: emailAddress == freezed
+          ? this.emailAddress
+          : emailAddress as EmailAddress,
+    );
+  }
 }
 
 abstract class _User implements User {
@@ -161,6 +110,8 @@ abstract class _User implements User {
   StringSingleLine get name;
   @override
   EmailAddress get emailAddress;
+
   @override
-  _$UserCopyWith<_User> get copyWith;
+  _User copyWith(
+      {UniqueId id, StringSingleLine name, EmailAddress emailAddress});
 }

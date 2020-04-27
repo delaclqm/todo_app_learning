@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_app_learning/application/auth/auth_bloc.dart';
 
+import '../../../routes/router.gr.dart';
 import '../todo_card.dart';
 
 class TodoHomePage extends StatelessWidget {
@@ -7,15 +10,29 @@ class TodoHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AuthBloc, AuthState>(
+          listener: (context, state) {
+            state.maybeMap(
+              unauthenticated: (_) =>
+                  Router.navigator.pushReplacementNamed(Router.signInPage),
+              orElse: () {},
+            );
+          },
+        ),
+      ],
+      child: Scaffold(
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
           actions: <Widget>[
             Row(children: <Widget>[
               IconButton(
-                icon: Icon(Icons.account_circle),
-                onPressed: null,
+                icon: Icon(Icons.exit_to_app),
+                onPressed: () {
+                  context.bloc<AuthBloc>().add(const AuthEvent.signedOut());
+                },
               )
             ], mainAxisAlignment: MainAxisAlignment.center)
           ],
@@ -28,7 +45,7 @@ class TodoHomePage extends StatelessWidget {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 children: List.generate(100, (_) => TodoCard()))),
-        floatingActionButton: MyFloatingActionButton());
+        floatingActionButton: MyFloatingActionButton()));
   }
 }
 
