@@ -11,8 +11,7 @@ class TodoDetail extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text('Some Task'),
-          Text('Some Difficulty'),
+          const Text('Some Task'),
         ],
       ),
     );

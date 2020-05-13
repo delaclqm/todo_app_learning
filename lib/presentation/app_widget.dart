@@ -8,6 +8,7 @@ import 'routes/router.gr.dart';
 class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
     return MultiBlocProvider(
       providers: [
         BlocProvider(

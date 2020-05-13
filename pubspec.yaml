@@ -3,30 +3,30 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  dartz: ^0.8.9
+  dartz: ^0.9.0-dev.6
   freezed_annotation: ^0.7.1
   uuid: ^2.0.4
   flutter_bloc: ^3.2.0
   auto_route: ^0.3.1
-  get_it: ^4.0.1
+  get_it: ^3.1.0
   meta: ^1.1.8
   firebase_core: ^0.4.3+3
-  firebase_auth: ^0.16.0
+  firebase_auth: ^0.15.4
   google_sign_in: ^4.1.1
   cloud_firestore: ^0.13.3
   injectable: ^0.3.0
   json_annotation: ^3.0.1
-  styled_widget: ^0.2.1+2
-  flutter_hooks: ^0.9.0
+  styled_widget: ^0.1.1
+  flutter_hooks: ^0.8.0
   time: ^1.2.0
   kt_dart: ^0.7.0
-  rxdart: ^0.23.0
-  reorderables: ^0.3.2
+  rxdart: ^0.23.1
+  reorderables: ^0.2.12
   provider: ^4.0.4
   implicitly_animated_reorderable_list: ^0.1.9
   flutter_slidable: ^0.5.4
@@ -43,3 +43,7 @@ dev_dependencies:
   
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/flutter.png
+    - assets/images/dart.png
+    - assets/images/firebase.png

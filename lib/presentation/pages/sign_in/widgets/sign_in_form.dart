@@ -18,16 +18,21 @@ class SignInForm extends StatelessWidget {
           (either) {
             either.fold(
               (failure) {
-                SnackBar(
-                  content: failure.map(
-                    // Use localized strings here in your apps
-                    cancelledByUser: (_) => const Text('Cancelled'),
-                    serverError: (_) => const Text('Server error'),
-                    emailAlreadyInUse: (_) => const Text('Email already in use'),
+                final message = failure.map(
+                    cancelledByUser: (_) => 'Cancelled',
+                    serverError: (_) => 'Server error',
+                    emailAlreadyInUse: (_) => 'Email already in use',
                     invalidEmailAndPasswordCombination: (_) =>
-                      const Text('Invalid email and password combination'),
+                        'Invalid email and password combination');
+                final snackbar = SnackBar(
+                  content: Text(
+                    message,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
                   ),
+                  backgroundColor: Colors.red,
                 );
+                Scaffold.of(context).showSnackBar(snackbar);
               },
               (_) {
                 Router.navigator.pushReplacementNamed(Router.todoHomePage);
@@ -49,24 +54,23 @@ class SignInForm extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   const Image(
-                  image: NetworkImage(
-                    "https://strattonapps.com/wp-content/uploads/2020/02/flutter-logo-5086DD11C5-seeklogo.com_.png"),
-                  height: 100.0),
+                      image: AssetImage('assets/images/flutter.png'),
+                      height: 100.0),
                   const Text('&').textScale(3.0),
                   const Image(
-                  image: NetworkImage(
-                    "https://www.stickpng.com/assets/images/5847f289cef1014c0b5e486b.png"),
-                  height: 100.0),
+                      image: AssetImage('assets/images/dart.png'),
+                      height: 100.0),
                   const Text('&').textScale(3.0),
                   const Image(
-                    image: NetworkImage(
-                      "https://www.stickpng.com/assets/images/5847f40ecef1014c0b5e488a.png"),
-                  height: 100.0,
-                    ),
+                    image: AssetImage('assets/images/firebase.png'),
+                    height: 100.0,
+                  ),
                 ],
               ),
               const SizedBox(height: 20),
-              const Text("Sign In").textScale(3.0).textAlignment(TextAlign.center),
+              const Text("Sign In")
+                  .textScale(3.0)
+                  .textAlignment(TextAlign.center),
               if (state.isSubmitting) ...[
                 const SizedBox(height: 8),
                 const LinearProgressIndicator(value: null),
@@ -152,8 +156,8 @@ class SignInForm extends StatelessWidget {
       splashColor: Colors.grey,
       onPressed: () => {
         context
-          .bloc<SignInFormBloc>()
-          .add(const SignInFormEvent.signInWithGooglePressed())
+            .bloc<SignInFormBloc>()
+            .add(const SignInFormEvent.signInWithGooglePressed())
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,
@@ -164,7 +168,7 @@ class SignInForm extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image(
+            const Image(
                 image: NetworkImage(
                     "https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-512.png"),
                 height: 35.0),

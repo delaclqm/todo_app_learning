@@ -1,109 +1,105 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_app_learning/application/auth/auth_bloc.dart';
+import 'package:todo_app_learning/application/todos/todo_category_form/todo_category_bloc.dart';
+import 'package:todo_app_learning/application/todos/todo_watcher/todo_watcher_bloc.dart';
+import 'package:todo_app_learning/domain/todo/value_objects.dart';
+import 'package:todo_app_learning/presentation/pages/todo/todo_category_create/todo_category_form.dart';
+import 'package:todo_app_learning/presentation/pages/todo/todo_home/widgets/todo_home_body.dart';
 
+import '../../../../application/auth/auth_bloc.dart';
+import '../../../../application/todos/todo_actor/todo_actor_bloc.dart';
+import '../../../../injection.dart';
 import '../../../routes/router.gr.dart';
-import '../todo_card.dart';
 
-class TodoHomePage extends StatelessWidget {
+class TodoHomePage extends StatelessWidget implements AutoRouteWrapper {
   const TodoHomePage({Key key}) : super(key: key);
+
+  @override
+  Widget get wrappedRoute => MultiBlocProvider(
+        providers: [
+          BlocProvider<TodoWatcherBloc>(
+            create: (context) => getIt<TodoWatcherBloc>()
+              ..add(const TodoWatcherEvent.watchAllStarted()),
+          ),
+          BlocProvider<TodoActorBloc>(
+            create: (context) => getIt<TodoActorBloc>(),
+          )
+        ],
+        child: this,
+      );
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
-      listeners: [
-        BlocListener<AuthBloc, AuthState>(
-          listener: (context, state) {
-            state.maybeMap(
-              unauthenticated: (_) =>
-                  Router.navigator.pushReplacementNamed(Router.signInPage),
-              orElse: () {},
-            );
-          },
-        ),
-      ],
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          actions: <Widget>[
-            Row(children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.exit_to_app),
-                onPressed: () {
-                  context.bloc<AuthBloc>().add(const AuthEvent.signedOut());
-                },
-              )
-            ], mainAxisAlignment: MainAxisAlignment.center)
-          ],
-        ),
-        body: Container(
-            padding: EdgeInsets.all(8.0),
-            child: GridView.count(
-                crossAxisCount: 2,
-                padding: const EdgeInsets.all(10),
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                children: List.generate(100, (_) => TodoCard()))),
-        floatingActionButton: MyFloatingActionButton()));
-  }
-}
-
-class MyFloatingActionButton extends StatelessWidget {
-  const MyFloatingActionButton({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () {
-        showModalBottomSheet(
-            context: context,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25.0),
-                  topRight: Radius.circular(25.0)),
-            ),
-            backgroundColor: Theme.of(context).canvasColor,
-            builder: (context) {
-              return _buildCreateCategoryModal(context);
-            });
-      },
-      child: Icon(Icons.add),
-      backgroundColor: Theme.of(context).accentColor,
-    );
-  }
-
-  Widget _buildCreateCategoryModal(BuildContext context) {
-    // return  Padding(
-    //   padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      return  Container(
-        padding: const EdgeInsets.all(14.0),
-      height: MediaQuery.of(context).size.height * 0.95,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text("Create New Board", style: TextStyle(fontSize: 35),),
-          Form(
-            child: ListTile(
-              title: TextField(
-              decoration: InputDecoration(
-                  fillColor: Theme.of(context).cardColor,
-                  hintText: 'Name of Board'
-                ),
-            )),
+        listeners: [
+          BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) {
+              state.maybeMap(
+                unauthenticated: (_) =>
+                    Router.navigator.pushReplacementNamed(Router.signInPage),
+                orElse: () {},
+              );
+            },
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              RaisedButton(
-                child: Text('Create'),
-                onPressed: () => {},
-              )
-            ]
+          BlocListener<TodoActorBloc, TodoActorState>(
+            listener: (context, state) {
+              state.maybeMap(
+                deleteFailure: (state) {
+                  final message = state.todoFailure.map(
+                    insufficientPermissions: (_) => 'Insufficient permissions',
+                    unableToUpdate: (_) => 'Error',
+                    unexpected: (_) =>
+                        'An unexpected error occured while deleting.',
+                  );
+                  final snackbar = SnackBar(
+                    content: Text(
+                      message,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                    backgroundColor: Colors.red,
+                  );
+                  Scaffold.of(context).showSnackBar(snackbar);
+                },
+                orElse: () {},
+              );
+            },
           )
         ],
-      ),
-    );
+        child: Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              title: const Text('Todo Categories'),
+              actions: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.exit_to_app),
+                      onPressed: () {
+                        context
+                            .bloc<AuthBloc>()
+                            .add(const AuthEvent.signedOut());
+                      },
+                    )
+                  ],
+                )
+              ],
+            ),
+            body: TodoContainer(),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const TodoCategoryForm(editedTodo: null);
+                    });
+              },
+              backgroundColor: Theme.of(context).accentColor,
+              child: Icon(Icons.add),
+            )));
   }
 }

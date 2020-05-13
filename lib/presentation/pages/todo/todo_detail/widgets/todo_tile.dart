@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'todo_detail/todo_detail.dart';
+import '../todo_detail.dart';
 
 class TodoTile extends StatefulWidget {
   
@@ -28,12 +28,12 @@ class _TodoTileState extends State<TodoTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         leading: Container(
-          padding: EdgeInsets.only(right: 12.0),
-          decoration: new BoxDecoration(
-              border: new Border(
-                  right: new BorderSide(width: 1.0, color: Colors.white24))),
+          padding: const  EdgeInsets.only(right: 12.0),
+          decoration: const BoxDecoration(
+              border: Border(
+                  right: BorderSide(width: 1.0, color: Colors.white24))),
           child: Checkbox(
             value: _completed,
             checkColor: Colors.black,
@@ -54,25 +54,25 @@ class _TodoTileState extends State<TodoTile> {
                 flex: 1,
                 child: Container(
                   child: LinearProgressIndicator(
-                      backgroundColor: Color.fromRGBO(209, 224, 224, 0.2),
+                      backgroundColor: const Color.fromRGBO(209, 224, 224, 0.2),
                       value: _difficulty,
                       valueColor: AlwaysStoppedAnimation(Colors.green)),
                 )),
             Expanded(
               flex: 4,
               child: Padding(
-                  padding: EdgeInsets.only(left: 10.0),
+                  padding: const EdgeInsets.only(left: 10.0),
                   child:
                       Text(_difficultyInWords, style: TextStyle(color: Colors.white))),
             )
           ],
         ),
-        trailing: _buildTrailingActionIcon());
+        trailing: const TrailingActionIcon());
   }
 }
 
-class _buildTrailingActionIcon extends StatelessWidget {
-  const _buildTrailingActionIcon({
+class TrailingActionIcon extends StatelessWidget {
+  const TrailingActionIcon({
     Key key,
   }) : super(key: key);
 
@@ -84,14 +84,14 @@ class _buildTrailingActionIcon extends StatelessWidget {
         onPressed: () {
           showModalBottomSheet(
               context: context,
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(50.0),
                   topRight: Radius.circular(50.0)
                 ),
               ),
               backgroundColor: Theme.of(context).canvasColor,
-              builder: (context) => TodoDetail());
+              builder: (context) => const TodoDetail());
         });
   }
 }

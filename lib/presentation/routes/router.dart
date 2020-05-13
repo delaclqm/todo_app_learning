@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route_annotations.dart';
+import 'package:todo_app_learning/presentation/pages/todo/todo_detail/todo_detail_page.dart';
 
 import '../pages/sign_in/sign_in.dart';
 import '../pages/splash/splash_page.dart';
@@ -11,5 +12,5 @@ class $Router {
   SignInPage signInPage;
   TodoHomePage todoHomePage;
   // @MaterialRoute(fullscreenDialog: true)
-  // TodoDetailPage todoDetailPage;
+  TodoDetailPage todoDetailPage;
 }
