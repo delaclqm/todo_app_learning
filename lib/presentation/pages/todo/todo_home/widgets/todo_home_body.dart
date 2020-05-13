@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_app_learning/application/todos/todo_watcher/todo_watcher_bloc.dart';
-import 'package:todo_app_learning/presentation/pages/todo/todo_home/widgets/todo_card.dart';
+
+import '../../../../../application/todos/todo_watcher/todo_watcher_bloc.dart';
+import 'todo_card.dart';
 
 class TodoContainer extends StatelessWidget {
   @override

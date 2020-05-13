@@ -47,8 +47,12 @@ class TodoCategoryForm extends StatelessWidget {
                   Scaffold.of(context).showSnackBar(snackbar);
                 },
                 (_) {
-                  Router.navigator.popUntil(
-                      (route) => route.settings.name == Router.todoHomePage);
+                  
+                  Router.navigator.popUntil((route) => route.settings.name == Router.todoHomePage);
+                  Router.navigator.pushNamed(
+                    Router.todoDetailPage,
+                    arguments: TodoDetailPageArguments(todoCategory: state.todoCategory)
+                  );
                 },
               );
             },
@@ -57,7 +61,11 @@ class TodoCategoryForm extends StatelessWidget {
         buildWhen: (p, c) => p.isSaving != c.isSaving,
         builder: (context, state) {
           final dialog = SimpleDialog(
-            title: Text(state.isEditing ? "Create Todo Category" : "Edit Todo Category"),
+            title: BlocBuilder<TodoCategoryBloc, TodoCategoryState>(
+              condition: (p, c) => p.isEditing != c.isEditing,
+              builder: (context, state) =>
+                Text(!state.isEditing ? "Create Todo Category" : "Edit Todo Category"),
+            ),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             contentPadding: const EdgeInsets.all(20),
@@ -145,7 +153,7 @@ class TodoCategoryForm extends StatelessWidget {
                     },
                     color: Colors.green,
                     child: Text(
-                      state.isEditing? 'Submit' : 'Create',
+                      !state.isEditing ? 'Submit' : 'Create',
                       style: TextStyle(color: Colors.black),
                     ),
                   )
@@ -157,9 +165,9 @@ class TodoCategoryForm extends StatelessWidget {
           if (state.isSaving) {
             return Stack(
               children: <Widget>[
-                Opacity(
-                  child: dialog, 
+                Opacity( 
                   opacity: 0.5,
+                  child: dialog,
                 ),
                 Positioned(
                   top: MediaQuery.of(context).size.height/2 -32,

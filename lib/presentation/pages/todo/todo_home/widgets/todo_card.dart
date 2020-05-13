@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app_learning/domain/todo/todo_category/todo_category.dart';
-import 'package:todo_app_learning/presentation/routes/router.gr.dart';
+import 'package:todo_app_learning/presentation/pages/todo/todo_forms/todo_category_delete_form.dart';
+
+import '../../../../../domain/todo/todo_category/todo_category.dart';
+import '../../../../routes/router.gr.dart';
 
 class TodoCard extends StatelessWidget {
 
@@ -17,7 +19,7 @@ class TodoCard extends StatelessWidget {
 
     return GestureDetector(
         onTap: () {
-          Router.navigator.pushReplacementNamed(
+          Router.navigator.pushNamed(
             Router.todoDetailPage,
             arguments: TodoDetailPageArguments(todoCategory: this.todoCategory)
           );

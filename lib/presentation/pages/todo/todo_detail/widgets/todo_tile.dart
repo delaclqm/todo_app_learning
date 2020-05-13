@@ -2,7 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../todo_detail.dart';
+import 'todo_detail.dart';
+
 
 class TodoTile extends StatefulWidget {
   

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app_learning/domain/todo/todo_category/todo_category.dart';
-import 'package:todo_app_learning/presentation/pages/todo/todo_category_create/todo_category_form.dart';
-import 'package:todo_app_learning/presentation/pages/todo/todo_detail/widgets/todo_tile.dart';
-import 'package:todo_app_learning/presentation/routes/router.gr.dart';
+
+import '../../../../domain/todo/todo_category/todo_category.dart';
+import '../../../routes/router.gr.dart';
+import '../todo_forms/todo_category_delete_form.dart';
+import '../todo_forms/todo_category_form.dart';
+import 'widgets/todo_tile.dart';
 
 class TodoDetailPage extends StatelessWidget {
   final TodoCategory todoCategory;
@@ -23,6 +25,13 @@ class TodoDetailPage extends StatelessWidget {
             onPressed: () => Router.navigator.popUntil((route) => route.settings.name == Router.todoHomePage),
           ),
           actions: <Widget>[
+            IconButton(icon: Icon(Icons.delete), onPressed: () {
+              showDialog(
+                    context: context,
+                    builder: (context) {
+                      return TodoCategoryDeleteForm(todoToDelete: todoCategory);
+                    });
+            }),
             IconButton(icon: Icon(Icons.settings), onPressed: () {
               showDialog(
                     context: context,

@@ -29,13 +29,13 @@ class CategoryName extends ValueObject<String> {
 
 class CategoryColor extends ValueObject<Color> {
   static const List<Color> predefinedColors = [
-    Color(0xfffafafa), // canvas
-    Color(0xfffa8072), // salmon
-    Color(0xfffedc56), // mustard
-    Color(0xffd0f0c0), // tea
-    Color(0xfffca3b7), // flamingo
-    Color(0xff997950), // tortilla
-    Color(0xfffffdd0), // cream
+    Color(0xffAA00FF), // purple
+    Color(0xffD50000), // red
+    Color(0xff304FFE), // blue
+    Color(0xff1B5E20), // green
+    Color(0xffE65100), // orange
+    Color(0xff212121), // grey
+    Color(0xffF50057), // pink
   ];
 
   @override

@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kt_dart/collection.dart';
-import 'package:flutter/foundation.dart';
-import 'package:todo_app_learning/domain/core/value_objects.dart';
-import 'package:todo_app_learning/domain/todo/todo_item/todo_item.dart';
-import 'package:todo_app_learning/domain/todo/value_objects.dart';
+
+import '../../../../domain/core/value_objects.dart';
+import '../../../../domain/todo/todo_item/todo_item.dart';
+import '../../../../domain/todo/value_objects.dart';
 
 part 'todo_item.freezed.dart';
 

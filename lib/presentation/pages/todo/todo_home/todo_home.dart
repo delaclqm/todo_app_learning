@@ -1,17 +1,14 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_app_learning/application/todos/todo_category_form/todo_category_bloc.dart';
-import 'package:todo_app_learning/application/todos/todo_watcher/todo_watcher_bloc.dart';
-import 'package:todo_app_learning/domain/todo/value_objects.dart';
-import 'package:todo_app_learning/presentation/pages/todo/todo_category_create/todo_category_form.dart';
-import 'package:todo_app_learning/presentation/pages/todo/todo_home/widgets/todo_home_body.dart';
 
 import '../../../../application/auth/auth_bloc.dart';
 import '../../../../application/todos/todo_actor/todo_actor_bloc.dart';
+import '../../../../application/todos/todo_watcher/todo_watcher_bloc.dart';
 import '../../../../injection.dart';
 import '../../../routes/router.gr.dart';
+import '../todo_forms/todo_category_form.dart';
+import 'widgets/todo_home_body.dart';
 
 class TodoHomePage extends StatelessWidget implements AutoRouteWrapper {
   const TodoHomePage({Key key}) : super(key: key);
