@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:kt_dart/collection.dart';
-import 'package:todo_app_learning/domain/todo/todo_item/todo_item.dart';
 
 import '../core/failures.dart';
 import '../core/value_objects.dart';

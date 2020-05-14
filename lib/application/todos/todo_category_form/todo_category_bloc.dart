@@ -7,16 +7,16 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kt_dart/collection.dart';
 import 'package:meta/meta.dart';
-import 'package:todo_app_learning/domain/todo/i_todo_repository.dart';
-import 'package:todo_app_learning/domain/todo/todo_category/todo_category.dart';
-import 'package:todo_app_learning/domain/todo/todo_category/todo_category_failure.dart';
-import 'package:todo_app_learning/domain/todo/value_objects.dart';
-import 'package:todo_app_learning/presentation/pages/todo/misc/todo_item.dart';
 
-part 'todo_category_event.dart';
-part 'todo_category_state.dart';
+import '../../../domain/todo/i_todo_repository.dart';
+import '../../../domain/todo/todo_category/todo_category.dart';
+import '../../../domain/todo/todo_category/todo_category_failure.dart';
+import '../../../domain/todo/value_objects.dart';
+import '../../../presentation/pages/todo/misc/todo_item.dart';
 
 part 'todo_category_bloc.freezed.dart';
+part 'todo_category_event.dart';
+part 'todo_category_state.dart';
 
 @injectable
 class TodoCategoryBloc extends Bloc<TodoCategoryEvent, TodoCategoryState> {

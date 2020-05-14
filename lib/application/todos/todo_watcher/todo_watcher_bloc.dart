@@ -23,7 +23,7 @@ class TodoWatcherBloc extends Bloc<TodoWatcherEvent, TodoWatcherState> {
   StreamSubscription<Either<TodoCategoryFailure, KtList<TodoCategory>>> _todoStreamSubscription;
 
   @override
-  TodoWatcherState get initialState => TodoWatcherState.initial();
+  TodoWatcherState get initialState => const TodoWatcherState.initial();
 
   @override
   Stream<TodoWatcherState> mapEventToState(

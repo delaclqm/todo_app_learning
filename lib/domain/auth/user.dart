@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'value_objects.dart';
+
 import '../core/entity.dart';
 import '../core/failures.dart';
 import '../core/value_objects.dart';
+import 'value_objects.dart';
 
 part 'user.freezed.dart';
 

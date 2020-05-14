@@ -3,11 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kt_dart/collection.dart';
-import 'package:todo_app_learning/domain/todo/todo_item/todo_item.dart';
 
 import '../../core/entity.dart';
 import '../../core/failures.dart';
 import '../../core/value_objects.dart';
+import '../todo_item/todo_item.dart';
 import '../value_objects.dart';
 
 part 'todo_category.freezed.dart';

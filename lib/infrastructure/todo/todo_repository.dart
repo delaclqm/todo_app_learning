@@ -2,15 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
-
-import 'package:rxdart/rxdart.dart';
 import 'package:kt_dart/collection.dart';
-import 'package:todo_app_learning/domain/todo/todo_category/todo_category.dart';
-import 'package:todo_app_learning/domain/todo/todo_category/todo_category_failure.dart';
-import 'package:todo_app_learning/infrastructure/todo/todo_dataTransferObj.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../domain/todo/i_todo_repository.dart';
+import '../../domain/todo/todo_category/todo_category.dart';
+import '../../domain/todo/todo_category/todo_category_failure.dart';
 import '../core/firebase_helper_functions.dart';
+import 'todo_dataTransferObj.dart';
 
 @prod
 @lazySingleton
@@ -42,35 +41,6 @@ class TodoRepository implements ITodoRepository {
       }
     });
   }
-
-  // @override
-  // Stream<Either<TodoCategoryFailure, KtList<TodoCategory>>> watchUncompleted() async* {
-  //   final userDoc = await _firestore.userDocument();
-  //   yield* userDoc.todoCategoryCollection
-  //       .orderBy('serverTimeStamp', descending: true)
-  //       .snapshots()
-  //       .map(
-  //         (snapshot) => snapshot.documents
-  //             .map((doc) => TodoDto.fromFirestore(doc).toDomain()),
-  //       )
-  //       .map(
-  //         (todoCategories) => right<TodoCategoryFailure, KtList<TodoCategory>>(
-  //           todoCategories
-  //               .where(
-  //                 (todoCategory) =>
-  //                     todoCategory.todos.getOrCrash().any((todoItem) => !todoItem.done),
-  //               )
-  //               .toImmutableList(),
-  //         ),
-  //       )
-  //       .onErrorReturnWith((e) {
-  //     if (e is PlatformException && e.message.contains('PERMISSION_DENIED')) {
-  //       return left(const TodoCategoryFailure.insufficientPermissions());
-  //     } else {
-  //       return left(const TodoCategoryFailure.unexpected());
-  //     }
-  //   });
-  // }
 
   @override
   Future<Either<TodoCategoryFailure, Unit>> create(TodoCategory todoCategory) async {
