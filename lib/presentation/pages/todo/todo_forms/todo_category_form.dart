@@ -1,20 +1,22 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../../../application/todos/todo_category_form/todo_category_bloc.dart';
 import '../../../../domain/todo/todo_category/todo_category.dart';
 import '../../../../domain/todo/value_objects.dart';
 import '../../../../injection.dart';
 import '../../../routes/router.gr.dart';
+import 'widgets/todo_category_color_picker.dart';
+import 'widgets/todo_category_name_field.dart';
 
-class TodoCategoryForm extends StatelessWidget {
+class TodoCategoryForm extends HookWidget {
   final TodoCategory editedTodo;
 
   const TodoCategoryForm({
-    Key key,
     @required this.editedTodo,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,6 @@ class TodoCategoryForm extends StatelessWidget {
                   Scaffold.of(context).showSnackBar(snackbar);
                 },
                 (_) {
-                  
                   Router.navigator.popUntil((route) => route.settings.name == Router.todoHomePage);
                   Router.navigator.pushNamed(
                     Router.todoDetailPage,
@@ -70,29 +71,7 @@ class TodoCategoryForm extends StatelessWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             contentPadding: const EdgeInsets.all(20),
             children: <Widget>[
-              TextFormField(
-                onChanged: (value) => context
-                    .bloc<TodoCategoryBloc>()
-                    .add(TodoCategoryEvent.nameChanged(value)),
-                validator: (_) => context
-                    .bloc<TodoCategoryBloc>()
-                    .state
-                    .todoCategory
-                    .name
-                    .value
-                    .fold(
-                      (f) => f.maybeMap(
-                        empty: (f) => 'Cannot be empty',
-                        exceedingLength: (f) =>
-                            'Exceeding length, max: ${f.max}',
-                        orElse: () => null,
-                      ),
-                      (_) => null,
-                    ),
-                decoration: InputDecoration(
-                    fillColor: Theme.of(context).cardColor,
-                    hintText: 'Name of Category'),
-              ),
+              const TodoCategoryNameField(),
               const SizedBox(height: 20),
               Text('Category Color',
                   style: TextStyle(fontSize: 17, color: Colors.grey[500])),
@@ -104,32 +83,7 @@ class TodoCategoryForm extends StatelessWidget {
                   for (int i = 0;
                       i < CategoryColor.predefinedColors.length;
                       i++)
-                    GestureDetector(
-                        onTap: () {
-                          context.bloc<TodoCategoryBloc>().add(
-                              TodoCategoryEvent.colorChanged(
-                                  CategoryColor.predefinedColors[i]));
-                        },
-                        child: SimpleDialogOption(
-                            padding: const EdgeInsets.all(5),
-                            child: Material(
-                              color: CategoryColor.predefinedColors[i],
-                              elevation: 4,
-                              shape: CircleBorder(
-                                side: state.todoCategory.color.value.fold(
-                                  // In case of a failure, just don't select anything
-                                  (_) => BorderSide.none,
-                                  (color) =>
-                                      color == CategoryColor.predefinedColors[i]
-                                          ? const BorderSide(width: 1.5)
-                                          : BorderSide.none,
-                                ),
-                              ),
-                              child: Container(
-                                width: 25,
-                                height: 25,
-                              ),
-                            )))
+                  TodoCategoryColorPicker(CategoryColor.predefinedColors[i])
                 ],
               ),
               const SizedBox(height: 10),

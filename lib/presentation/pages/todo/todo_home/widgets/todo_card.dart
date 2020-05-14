@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app_learning/application/todos/todo_actor/todo_actor_bloc.dart';
 import 'package:todo_app_learning/presentation/pages/todo/todo_forms/todo_category_delete_form.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../domain/todo/todo_category/todo_category.dart';
 import '../../../../routes/router.gr.dart';
 
@@ -21,7 +22,7 @@ class TodoCard extends StatelessWidget {
         onTap: () {
           Router.navigator.pushNamed(
             Router.todoDetailPage,
-            arguments: TodoDetailPageArguments(todoCategory: this.todoCategory)
+            arguments: TodoDetailPageArguments(todoCategory: todoCategory)
           );
         },
         child: Card(
@@ -58,7 +59,8 @@ class TodoCard extends StatelessWidget {
                       minWidth: 150,
                       minHeight: 150,
                     )),
-              )
+              ),
+              
             ])));
   }
 

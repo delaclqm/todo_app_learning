@@ -1,30 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-import 'todo_detail.dart';
+class TodoTile extends HookWidget {
+  final Color checkColor;
 
-
-class TodoTile extends StatefulWidget {
-  
-  @override
-  _TodoTileState createState() => _TodoTileState();
-}
-
-class _TodoTileState extends State<TodoTile> {
-  bool _completed = Random().nextBool();
-  static double _difficulty = Random().nextDouble();
-  String _difficultyInWords = _determineDifficulty(_difficulty);
-
-  static String _determineDifficulty(double value) {
-    if(value <= 0.33) {
-      return "Easy";
-    } else if (value <= 0.66) {
-      return "Medium";
-    } else {
-      return "Hard";
-    }
-  }
+  const TodoTile({
+    @required this.checkColor
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +18,11 @@ class _TodoTileState extends State<TodoTile> {
               border: Border(
                   right: BorderSide(width: 1.0, color: Colors.white24))),
           child: Checkbox(
-            value: _completed,
+            value: true,
             checkColor: Colors.black,
+            activeColor: checkColor,
             onChanged: (bool newValue) {
-              setState(() {
-                _completed = newValue;
-              });
+              
             },
           )
         ),
@@ -49,50 +30,14 @@ class _TodoTileState extends State<TodoTile> {
           'Title',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        subtitle: Row(
-          children: <Widget>[
-            Expanded(
-                flex: 1,
-                child: Container(
-                  child: LinearProgressIndicator(
-                      backgroundColor: const Color.fromRGBO(209, 224, 224, 0.2),
-                      value: _difficulty,
-                      valueColor: AlwaysStoppedAnimation(Colors.green)),
-                )),
-            Expanded(
-              flex: 4,
-              child: Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child:
-                      Text(_difficultyInWords, style: TextStyle(color: Colors.white))),
-            )
-          ],
+        subtitle: Text(
+          'Created on Tuesday'
         ),
-        trailing: const TrailingActionIcon());
-  }
-}
+        trailing: IconButton(
+          icon: Icon(Icons.delete,
+          color: Colors.white, size: 20.0),
+          onPressed: () {
 
-class TrailingActionIcon extends StatelessWidget {
-  const TrailingActionIcon({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-        icon: Icon(Icons.keyboard_arrow_right,
-            color: Colors.white, size: 30.0),
-        onPressed: () {
-          showModalBottomSheet(
-              context: context,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(50.0),
-                  topRight: Radius.circular(50.0)
-                ),
-              ),
-              backgroundColor: Theme.of(context).canvasColor,
-              builder: (context) => const TodoDetail());
-        });
+        }));
   }
 }

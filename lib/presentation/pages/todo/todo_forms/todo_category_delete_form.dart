@@ -10,9 +10,8 @@ class TodoCategoryDeleteForm extends StatelessWidget {
   final TodoCategory todoToDelete;
 
   const TodoCategoryDeleteForm({
-    Key key,
     @required this.todoToDelete,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
