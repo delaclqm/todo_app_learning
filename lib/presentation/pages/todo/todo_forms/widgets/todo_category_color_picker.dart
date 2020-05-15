@@ -29,7 +29,7 @@ class TodoCategoryColorPicker extends HookWidget {
                           // In case of a failure, just don't select anything
                           (_) => BorderSide.none,
                           (color) => color == currentColor
-                              ? const BorderSide(width: 1.5)
+                              ? const BorderSide(width: 1.5, color: Colors.white)
                               : BorderSide.none,
                         ),
                         ),

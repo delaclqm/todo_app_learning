@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:todo_app_learning/domain/todo/todo_category/todo_category.dart';
+import 'package:todo_app_learning/domain/todo/todo_item/todo_item.dart';
+import 'package:todo_app_learning/presentation/pages/todo/misc/todo_item.dart';
 
 class TodoTile extends HookWidget {
-  final Color checkColor;
+  final TodoCategory todoCategory;
+  final TodoItem todoItem;
 
   const TodoTile({
-    @required this.checkColor
+    @required this.todoCategory,
+    @required this.todoItem
   });
 
   @override
@@ -18,20 +23,17 @@ class TodoTile extends HookWidget {
               border: Border(
                   right: BorderSide(width: 1.0, color: Colors.white24))),
           child: Checkbox(
-            value: true,
+            value: todoItem.done,
             checkColor: Colors.black,
-            activeColor: checkColor,
+            activeColor: todoCategory.color.getOrCrash(),
             onChanged: (bool newValue) {
               
             },
           )
         ),
         title: Text(
-          'Title',
+          todoItem.name.getOrCrash(),
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        subtitle: Text(
-          'Created on Tuesday'
         ),
         trailing: IconButton(
           icon: Icon(Icons.delete,

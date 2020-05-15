@@ -7,6 +7,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kt_dart/collection.dart';
 import 'package:meta/meta.dart';
+import 'package:todo_app_learning/domain/todo/todo_item/todo_item.dart';
 
 import '../../../domain/todo/i_todo_repository.dart';
 import '../../../domain/todo/todo_category/todo_category.dart';

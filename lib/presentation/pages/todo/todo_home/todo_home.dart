@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:todo_app_learning/application/todos/todo_category_form/todo_category_bloc.dart';
 
 import '../../../../application/auth/auth_bloc.dart';
 import '../../../../application/todos/todo_actor/todo_actor_bloc.dart';
@@ -21,9 +22,12 @@ class TodoHomePage extends HookWidget implements AutoRouteWrapper {
             create: (context) => getIt<TodoWatcherBloc>()
               ..add(const TodoWatcherEvent.watchAllStarted()),
           ),
-          // BlocProvider<TodoActorBloc>(
-          //   create: (context) => getIt<TodoActorBloc>(),
-          // )
+          BlocProvider<TodoActorBloc>(
+            create: (context) => getIt<TodoActorBloc>(),
+          ),
+          BlocProvider<TodoCategoryBloc>(
+            create: (context) => getIt<TodoCategoryBloc>(),
+          ),
         ],
         child: this,
       );
@@ -41,30 +45,30 @@ class TodoHomePage extends HookWidget implements AutoRouteWrapper {
               );
             },
           ),
-          // BlocListener<TodoActorBloc, TodoActorState>(
-          //   listener: (context, state) {
-          //     state.maybeMap(
-          //       deleteFailure: (state) {
-          //         final message = state.todoFailure.map(
-          //           insufficientPermissions: (_) => 'Insufficient permissions',
-          //           unableToUpdate: (_) => 'Error',
-          //           unexpected: (_) =>
-          //               'An unexpected error occured while deleting.',
-          //         );
-          //         final snackbar = SnackBar(
-          //           content: Text(
-          //             message,
-          //             style: TextStyle(
-          //                 fontWeight: FontWeight.bold, color: Colors.white),
-          //           ),
-          //           backgroundColor: Colors.red,
-          //         );
-          //         Scaffold.of(context).showSnackBar(snackbar);
-          //       },
-          //       orElse: () {},
-          //     );
-          //   },
-          // )
+          BlocListener<TodoActorBloc, TodoActorState>(
+            listener: (context, state) {
+              state.maybeMap(
+                deleteFailure: (state) {
+                  final message = state.todoFailure.map(
+                    insufficientPermissions: (_) => 'Insufficient permissions',
+                    unableToUpdate: (_) => 'Error',
+                    unexpected: (_) =>
+                        'An unexpected error occured while deleting.',
+                  );
+                  final snackbar = SnackBar(
+                    content: Text(
+                      message,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                    backgroundColor: Colors.red,
+                  );
+                  Scaffold.of(context).showSnackBar(snackbar);
+                },
+                orElse: () {},
+              );
+            },
+          )
         ],
         child: Scaffold(
             appBar: AppBar(
@@ -90,10 +94,13 @@ class TodoHomePage extends HookWidget implements AutoRouteWrapper {
             body: TodoContainer(),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
+                final todoCategoryBloc = context.bloc<TodoCategoryBloc>();
                 showDialog(
                     context: context,
                     builder: (context) {
-                      return const TodoCategoryForm(editedTodo: null);
+                      return TodoCategoryForm(
+                        editedTodo: null
+                        );
                     });
               },
               backgroundColor: Theme.of(context).accentColor,

@@ -15,7 +15,7 @@ class TodoCategoryForm extends HookWidget {
   final TodoCategory editedTodo;
 
   const TodoCategoryForm({
-    @required this.editedTodo,
+    @required this.editedTodo
   });
 
   @override
@@ -52,7 +52,10 @@ class TodoCategoryForm extends HookWidget {
                   Router.navigator.popUntil((route) => route.settings.name == Router.todoHomePage);
                   Router.navigator.pushNamed(
                     Router.todoDetailPage,
-                    arguments: TodoDetailPageArguments(todoCategory: state.todoCategory)
+                    arguments: TodoDetailPageArguments(
+                      todoCategory: state.todoCategory,
+                      todoCategoryBloc: context.bloc<TodoCategoryBloc>()
+                    )
                   );
                 },
               );

@@ -12,6 +12,7 @@ import 'package:todo_app_learning/presentation/pages/sign_in/sign_in.dart';
 import 'package:todo_app_learning/presentation/pages/todo/todo_home/todo_home.dart';
 import 'package:todo_app_learning/presentation/pages/todo/todo_detail/todo_detail_page.dart';
 import 'package:todo_app_learning/domain/todo/todo_category/todo_category.dart';
+import 'package:todo_app_learning/application/todos/todo_category_form/todo_category_bloc.dart';
 
 class Router {
   static const splashPage = '/';
@@ -48,7 +49,10 @@ class Router {
         final typedArgs = args as TodoDetailPageArguments;
         return MaterialPageRoute<dynamic>(
           builder: (_) => TodoDetailPage(
-              key: typedArgs.key, todoCategory: typedArgs.todoCategory),
+                  key: typedArgs.key,
+                  todoCategory: typedArgs.todoCategory,
+                  todoCategoryBloc: typedArgs.todoCategoryBloc)
+              .wrappedRoute,
           settings: settings,
         );
       default:
@@ -65,5 +69,7 @@ class Router {
 class TodoDetailPageArguments {
   final Key key;
   final TodoCategory todoCategory;
-  TodoDetailPageArguments({this.key, @required this.todoCategory});
+  final TodoCategoryBloc todoCategoryBloc;
+  TodoDetailPageArguments(
+      {this.key, @required this.todoCategory, @required this.todoCategoryBloc});
 }

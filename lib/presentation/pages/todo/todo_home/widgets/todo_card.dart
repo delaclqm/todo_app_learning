@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app_learning/application/todos/todo_actor/todo_actor_bloc.dart';
+import 'package:todo_app_learning/application/todos/todo_category_form/todo_category_bloc.dart';
 import 'package:todo_app_learning/presentation/pages/todo/todo_forms/todo_category_delete_form.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../domain/todo/todo_category/todo_category.dart';
 import '../../../../routes/router.gr.dart';
 
 class TodoCard extends StatelessWidget {
-
   const TodoCard({
     Key key,
     @required this.todoCategory,
@@ -20,10 +20,12 @@ class TodoCard extends StatelessWidget {
 
     return GestureDetector(
         onTap: () {
-          Router.navigator.pushNamed(
-            Router.todoDetailPage,
-            arguments: TodoDetailPageArguments(todoCategory: todoCategory)
-          );
+          final todoCategoryBloc = context.bloc<TodoCategoryBloc>();
+          Router.navigator.pushNamed(Router.todoDetailPage,
+              arguments: TodoDetailPageArguments(
+                todoCategory: todoCategory,
+                todoCategoryBloc: todoCategoryBloc
+              ));
         },
         child: Card(
             shape: RoundedRectangleBorder(
@@ -60,9 +62,22 @@ class TodoCard extends StatelessWidget {
                       minHeight: 150,
                     )),
               ),
-              
+              Positioned(
+                left: 10,
+                bottom: 10,
+                child: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    final todoActorBloc = context.bloc<TodoActorBloc>();
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return BlocProvider.value(
+                              value: todoActorBloc,
+                              child: TodoCategoryDeleteForm(todoToDelete: todoCategory));
+                        });
+                  }),
+              )
             ])));
   }
-
- 
 }
